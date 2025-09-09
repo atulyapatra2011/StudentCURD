@@ -1,0 +1,31 @@
+
+{% extends 'Dashboard.html' %}
+{% load static %}
+{% block title %}Add STudent- Page{% endblock %}
+{% block content %}
+<h1>Welcome to the Student Management System</h1>
+<p>This is the Add STudent page. Use the navigation links above to manage students.</p>
+{% if messages %}
+        <div id="alert-container">
+            {% for message in messages %}
+                <div class="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <script>
+            // Automatically hide messages after 5 seconds
+            setTimeout(function() {
+                const alertContainer = document.getElementById('alert-container');
+                if (alertContainer) {
+                    alertContainer.style.display = 'none';
+                }
+            }, 5000);  // 5000 ms = 5 seconds
+        </script>
+    {% endif %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Student</button>
+{% endblock %}

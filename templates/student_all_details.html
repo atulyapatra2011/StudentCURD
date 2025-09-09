@@ -1,0 +1,21 @@
+<!-- templates/student_pdf_template.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student PDF</title>
+</head>
+<body>
+    <h1>Student Information</h1>
+    {% for student in student %}
+    <p><strong>ID:</strong> {{ student.id }}</p>
+    <p><strong>First Name:</strong> {{ student.first_name }}</p>
+    <p><strong>Last Name:</strong> {{ student.last_name }}</p>
+    <p><strong>Email:</strong> {{ student.email }}</p>
+    <p><strong>Date_of_birth</strong>{{ student.date_of_birth }}</p>
+    <p><strong>Phone Number</strong>{{ student.phone_number }}</p>
+    <p><strong>Address</strong>{{ student.address }}</p>
+    <p><strong>Course</strong>{{ student.course }}</p>
+    <p><img src="{{ student.profile_picture.url }}" height="100px" width="100px" alt={{student.first_name}}/></p>
+    {% endfor %}
+</body>
+</html>

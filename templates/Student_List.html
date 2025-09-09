@@ -1,0 +1,79 @@
+
+{% extends 'Dashboard.html' %}
+{% load static %}
+{% block title %}Student List- Page{% endblock %}
+{% block content %}
+<h1>Welcome to the Student Management System</h1>
+<p>This is the Student List page. Use the navigation links above to manage students.</p>
+<p>Require For Full Table PDF please  <a href="{% url 'pdf_table' %}">check here</a></p>
+{% if messages %}
+        <div id="alert-container">
+            {% for message in messages %}
+                <div class="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <script>
+            // Automatically hide messages after 5 seconds
+            setTimeout(function() {
+                const alertContainer = document.getElementById('alert-container');
+                if (alertContainer) {
+                    alertContainer.style.display = 'none';
+                }
+            }, 5000);  // 5000 ms = 5 seconds
+        </script>
+    {% endif %}
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Date of Birth</th>
+        <th>Phone Number</th>
+        <th>Address</th>
+        <th>Course</th>
+        <th>Photo</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>PDF</th>
+    </tr>
+    {% for stu in page_obj %}
+    <tr>
+        <td>{{ stu.id }}</td>
+        <td>{{ stu.first_name }}</td>
+        <td>{{ stu.last_name }}</td>
+        <td>{{ stu.date_of_birth }}</td>
+        <td>{{ stu.email }}</td>
+        <td>{{ stu.phone_number }}</td>
+        <td>{{ stu.address }}</td>
+        <td>{{ stu.course }}</td>
+        <td><img src="{{ stu.profile_picture.url }}" alt="{{ stu.first_name }}" width="100"></td>
+        <td>
+            <a href="{% url 'edit_student' id=stu.id %}" id="edit_button">Edit</a>
+            <!-- Add delete link if needed -->
+        </td>
+        <td>
+            <a href="{% url 'delete_student' id=stu.id %}" id="delete_button">Delete</a>
+        </td>
+        <td>
+            <a href="{% url 'pdf_student' id=stu.id %}" id="pdf_button">PDF</a>
+        </td>
+    </tr>
+    {% endfor %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+    </div>
+{% endblock %}
